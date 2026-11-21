@@ -30,6 +30,56 @@
     return null;
   }
 
+  function concatChunks(chunks, totalBytes) {
+    const out = new Uint8Array(totalBytes);
+    let off = 0;
+    for (const c of chunks) {
+      out.set(c, off);
+      off += c.byteLength;
+    }
+    return out.buffer;
+  }
+
+  function fetchViaPort(url, credentials) {
+    if (!extApi?.runtime?.connect) return Promise.reject(new Error('port fetch unavailable'));
+    return new Promise((resolve, reject) => {
+      const port = extApi.runtime.connect({ name: 'HOLO_FETCH_BLOB' });
+      const chunks = [];
+      let total = 0;
+      let settled = false;
+
+      const finish = (err, buf) => {
+        if (settled) return;
+        settled = true;
+        try {
+          port.disconnect();
+        } catch (_e) {
+          /* ignore */
+        }
+        if (err) reject(err);
+        else resolve(buf);
+      };
+
+      port.onMessage.addListener((msg) => {
+        if (msg?.type === 'chunk' && msg.data?.byteLength) {
+          chunks.push(msg.data);
+          total += msg.data.byteLength;
+        } else if (msg?.type === 'done') {
+          if (!total) finish(new Error('empty response'));
+          else finish(null, concatChunks(chunks, total));
+        } else if (msg?.type === 'error') {
+          finish(new Error(msg.error || 'port fetch failed'));
+        }
+      });
+
+      port.onDisconnect.addListener(() => {
+        if (!settled) finish(new Error('background port closed'));
+      });
+
+      port.postMessage({ type: 'start', url, credentials });
+    });
+  }
+
   async function fetchViaExtension(url, credentials) {
     let lastErr = new Error('extension fetch failed');
     for (let attempt = 0; attempt < 4; attempt += 1) {
@@ -63,9 +113,16 @@
     throw lastErr;
   }
 
-  /** Always use extension background (avoids CORS after shop → CloudFront redirect). */
+  /** Background fetch; port chunks avoid Chrome MV3 one-shot message size limits. */
   async function fetchBinary(url) {
     const shop = /hololivepro\.com/i.test(url);
+    if (extApi?.runtime?.connect) {
+      try {
+        return await fetchViaPort(url, shop);
+      } catch (err) {
+        console.warn('[holo-batch] port fetch', err);
+      }
+    }
     if (extApi?.runtime?.sendMessage) {
       return fetchViaExtension(url, shop);
     }
@@ -74,6 +131,29 @@
     const buf = await res.arrayBuffer();
     if (!buf.byteLength) throw new Error('empty response');
     return buf;
+  }
+
+  async function streamZipToWritable(zip, writable, onProgress) {
+    return new Promise((resolve, reject) => {
+      const writer = writable.getWriter();
+      const stream = zip.generateInternalStream({ type: 'uint8array', compression: 'STORE' });
+      let chain = Promise.resolve();
+
+      stream.on('error', reject);
+      stream.on('data', (chunk) => {
+        chain = chain.then(() => writer.write(chunk));
+      });
+      stream.on('end', () => {
+        chain
+          .then(() => writer.close())
+          .then(() => writable.close())
+          .then(() => resolve())
+          .catch(reject);
+      });
+
+      if (onProgress) onProgress({ pct: 98, text: 'ZIP をストリーム書き込み…' });
+      stream.resume();
+    });
   }
 
   async function buildFilteredZip(itemLinks, format, opts = {}) {
@@ -161,6 +241,12 @@
 
     if (stats.filesOk === 0) throw new Error('ダウンロードできたファイルがありません');
 
+    if (opts.zipWritable) {
+      await streamZipToWritable(zip, opts.zipWritable, onProgress);
+      onProgress({ pct: 100, text: '保存完了' });
+      return { stats, streamed: true };
+    }
+
     onProgress({ pct: 97, text: 'ZIP を生成中…' });
     const blob = await zip.generateAsync(
       { type: 'blob', compression: 'STORE' },
@@ -225,9 +311,26 @@
       if (!ok) return { cancelled: true };
     }
 
-    const { blob, stats } = await buildFilteredZip(items, format, { onProgress });
-    saveZipBlob(blob, format, { ...filterInfo, itemCount: items.length });
-    return { cancelled: false, stats };
+    const filterMeta = { ...filterInfo, itemCount: items.length };
+    const buildOpts = { onProgress };
+    const zipName = buildZipFileName(format, filterMeta);
+
+    if (typeof window.showSaveFilePicker === 'function') {
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: zipName,
+          types: [{ description: 'ZIP archive', accept: { 'application/zip': ['.zip'] } }],
+        });
+        buildOpts.zipWritable = await handle.createWritable();
+      } catch (err) {
+        if (err?.name === 'AbortError') return { cancelled: true };
+        console.warn('[holo-batch] showSaveFilePicker', err);
+      }
+    }
+
+    const result = await buildFilteredZip(items, format, buildOpts);
+    if (result.blob) saveZipBlob(result.blob, format, filterMeta);
+    return { cancelled: false, stats: result.stats, streamed: !!result.streamed };
   }
 
   globalThis.HoloLibraryBatchZip = { runFromVisibleItems, buildFilteredZip };

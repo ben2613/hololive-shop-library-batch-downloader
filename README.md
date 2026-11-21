@@ -68,6 +68,9 @@ Phase 3 is everything after the phase 2 MVP: safer large batches, clearer UX, an
 | Confirm when **>10 visible products** (before start only) | `library-batch-download.js` |
 | Sidebar: only talent checklist scrolls; WAV / MP3 / progress pinned | `library-list.js` |
 | Panel height = viewport minus actual top offset (shop header), sticky-aware | `syncFilterPanelHeight` in `library-list.js` |
+| **Chunked fetch** via `runtime.connect` (background streams response body) | `background.js`, `library-batch-download.js` — avoids Chrome MV3 single-message size limits; base64 `sendMessage` is fallback |
+| **Save to disk** via File System Access API when supported | `showSaveFilePicker` → JSZip `generateInternalStream` → writable file (Chromium, secure context). Cancelling the picker falls back to normal browser download blob |
+| Chrome MV3 blob bridge | `bufferB64` in `sendMessage` when port fetch is unavailable |
 
 ### Not yet (remaining phase 3)
 
@@ -75,7 +78,7 @@ Phase 3 is everything after the phase 2 MVP: safer large batches, clearer UX, an
 |------|----------------|
 | **Pre-run estimate** (product count, track count, rough WAV size) | Avoid accidental multi‑GB jobs |
 | **Cancel during run** | Stop fetch loop without closing the tab |
-| **File System Access API** (`showSaveFilePicker`) or chunked write | Reduce peak RAM for huge ZIPs |
+| **Lower peak RAM** (true streaming ZIP without holding all entries) | JSZip still buffers each file until final archive is written |
 | **Library MP3 ZIP** | Requires menu automation or an API — use `content.js` on detail pages today |
 
 Phase 1 probe notes remain below for debugging parse URLs.
