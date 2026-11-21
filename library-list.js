@@ -69,6 +69,57 @@
     );
   }
 
+  function buildFilterDownloadInfo() {
+    const titleQuery = searchInput.value.trim();
+    const talentNames = [
+      ...new Set(
+        [...talentBox.querySelectorAll('input[type="checkbox"]:checked')]
+          .map((cb) => cb.dataset.nameJa)
+          .filter(Boolean)
+      ),
+    ];
+    return { titleQuery, talentNames };
+  }
+
+  const progressBox = () => filterAside.querySelector('#holo-lib-progress');
+  const progressFill = () => filterAside.querySelector('#holo-lib-progress-fill');
+  const progressTrack = () => filterAside.querySelector('#holo-lib-progress-track');
+  const progressPct = () => filterAside.querySelector('#holo-lib-progress-pct');
+  const progressText = () => filterAside.querySelector('#holo-lib-progress-text');
+
+  function setBatchProgress(info) {
+    const box = progressBox();
+    const fill = progressFill();
+    const track = progressTrack();
+    const pctEl = progressPct();
+    const textEl = progressText();
+    if (!box || !fill) return;
+
+    if (typeof info === 'string') {
+      box.hidden = false;
+      textEl.textContent = info;
+      return;
+    }
+
+    const pct = Math.max(0, Math.min(100, info.pct ?? 0));
+    box.hidden = false;
+    fill.style.width = `${pct}%`;
+    if (track) track.setAttribute('aria-valuenow', String(pct));
+    if (pctEl) pctEl.textContent = `${pct}% `;
+    if (textEl) {
+      const t = info.text || '';
+      textEl.textContent = t.length > 48 ? `${t.slice(0, 48)}…` : t;
+      textEl.title = t.length > 48 ? t : '';
+    }
+  }
+
+  function hideBatchProgress() {
+    const box = progressBox();
+    const fill = progressFill();
+    if (box) box.hidden = true;
+    if (fill) fill.style.width = '0%';
+  }
+
   async function runLibraryZipBatch(format) {
     if (!globalThis.HoloLibraryBatchZip) {
       statusEl.textContent = 'ZIP モジュールが読み込まれていません';
@@ -78,25 +129,28 @@
     batchButtons.forEach((b) => {
       b.disabled = true;
     });
+    setBatchProgress({ pct: 0, text: '開始…' });
     try {
       const result = await globalThis.HoloLibraryBatchZip.runFromVisibleItems(
         format,
         visibleListItemLinks,
-        (msg) => {
-          statusEl.textContent = msg;
-        }
+        setBatchProgress,
+        buildFilterDownloadInfo()
       );
       if (result?.cancelled) {
         statusEl.textContent = 'キャンセルしました';
+        hideBatchProgress();
         return;
       }
       if (result?.stats) {
         const s = result.stats;
+        setBatchProgress({ pct: 100, text: `完了 · ${s.filesOk} ファイル / ${s.products} 商品` });
         statusEl.textContent = `ZIP 完了 · ${s.filesOk} ファイル / ${s.products} 商品` + (s.filesFail ? ` · 失敗 ${s.filesFail}` : '');
       }
     } catch (err) {
       statusEl.textContent = `ZIP 失敗: ${err.message}`;
       console.error('[holo-library-batch]', err);
+      hideBatchProgress();
     } finally {
       batchButtons.forEach((b) => {
         b.disabled = false;
@@ -115,9 +169,14 @@
       #container:has(#holo-library-layout),
       .Container:has(#holo-library-layout),
       .holo-library-shell-wide.Container,
-      #container.holo-library-shell-wide {
+      #container.holo-library-shell-wide,
+      .account.holo-library-shell-wide,
+      .holo-library-shell-wide {
         max-width: min(1320px, calc(100vw - 40px)) !important;
         width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box;
       }
       .holo-library-layout {
         display: flex;
@@ -131,6 +190,9 @@
       }
       #holo-library-filter {
         flex: 0 0 280px;
+        width: 280px;
+        min-width: 280px;
+        max-width: 280px;
         position: sticky;
         top: 16px;
         max-height: calc(100vh - 300px);
@@ -143,6 +205,12 @@
         font-family: system-ui, -apple-system, sans-serif;
         font-size: 13px;
         box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      #holo-library-filter > * {
+        min-width: 0;
+        max-width: 100%;
       }
       #holo-library-filter h3 {
         margin: 0 0 10px;
@@ -239,6 +307,10 @@
         color: #5f6368;
         font-size: 11px;
         line-height: 1.4;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-word;
+        max-width: 100%;
       }
       #holo-unmapped-overlay {
         display: none;
@@ -325,6 +397,9 @@
         margin-top: 12px;
         padding-top: 10px;
         border-top: 1px solid #dadce0;
+        width: 100%;
+        min-width: 0;
+        overflow: hidden;
       }
       .holo-lib-batch button {
         display: block;
@@ -346,6 +421,55 @@
       #holo-lib-dl-wav:hover:not(:disabled) { background: #0b8043; }
       #holo-lib-dl-mp3 { background: #1a73e8; }
       #holo-lib-dl-mp3:hover:not(:disabled) { background: #1557b0; }
+      #holo-lib-progress {
+        margin-top: 8px;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+      }
+      #holo-lib-progress[hidden] {
+        display: none !important;
+      }
+      #holo-lib-progress-track {
+        height: 8px;
+        background: #e8eaed;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      #holo-lib-progress-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #0f9d58, #34a853);
+        border-radius: 4px;
+        transition: width 0.2s ease;
+      }
+      #holo-lib-progress-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 8px;
+        margin-top: 5px;
+        font-size: 10px;
+        color: #5f6368;
+        line-height: 1.35;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+      }
+      #holo-lib-progress-pct {
+        flex-shrink: 0;
+        font-variant-numeric: tabular-nums;
+        color: #188038;
+        font-weight: 600;
+      }
+      #holo-lib-progress-text {
+        flex: 1 1 0;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     `;
     document.head.appendChild(style);
   }
@@ -369,6 +493,15 @@
         <span class="field-label">表示中の商品を ZIP</span>
         <button type="button" id="holo-lib-dl-wav">順次ダウンロード（WAV）</button>
         <button type="button" id="holo-lib-dl-mp3" disabled title="ZIP の MP3 は未対応。詳細ページの一括 MP3 を使用">順次ダウンロード（MP3・未対応）</button>
+        <div id="holo-lib-progress" hidden>
+          <div id="holo-lib-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div id="holo-lib-progress-fill"></div>
+          </div>
+          <div id="holo-lib-progress-label">
+            <span id="holo-lib-progress-pct"></span>
+            <span id="holo-lib-progress-text"></span>
+          </div>
+        </div>
       </div>
       <div id="holo-lib-status">準備中…</div>
     `;

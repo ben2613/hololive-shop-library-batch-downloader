@@ -55,15 +55,25 @@
     const delayProduct = opts.delayProductMs ?? 1200;
     const delayFile = opts.delayFileMs ?? 600;
     const onProgress = opts.onProgress || (() => {});
+    const productTotal = itemLinks.length;
+
+    function reportProgress(pi, fileIndex, fileCount, text) {
+      const share = 90 / Math.max(productTotal, 1);
+      const inner = fileCount > 0 ? (fileIndex + 0.5) / fileCount : 0.2;
+      const pct = Math.min(95, Math.round(5 + (pi + inner) * share));
+      onProgress({ pct, text });
+    }
 
     const zip = new JSZip();
     const stats = { products: 0, filesOk: 0, filesFail: 0 };
+
+    onProgress({ pct: 2, text: `商品 0 / ${productTotal} 準備中…` });
 
     for (let pi = 0; pi < itemLinks.length; pi++) {
       const link = itemLinks[pi];
       const href = link.href.split('?')[0];
       const listTitle = link.dataset.holoTitle || link.textContent.trim();
-      onProgress(`商品 ${pi + 1}/${itemLinks.length}: ${listTitle.slice(0, 36)}…`);
+      reportProgress(pi, 0, 1, `商品 ${pi + 1}/${productTotal}: ${listTitle.slice(0, 32)}…`);
 
       let page;
       try {
@@ -78,14 +88,21 @@
       const folder = safeName(page.productTitle || listTitle, `product_${pi + 1}`);
       stats.products += 1;
       const usedPaths = new Set();
+      const files = page.files || [];
+      let fi = 0;
 
-      for (const file of page.files) {
+      for (const file of files) {
         const url = pickDownloadUrl(file, format);
         if (!url) {
           stats.filesFail += 1;
           continue;
         }
-        onProgress(`商品 ${pi + 1}/${itemLinks.length} · file ${file.fileId}`);
+        reportProgress(
+          pi,
+          fi,
+          files.length,
+          `商品 ${pi + 1}/${productTotal} · ファイル ${fi + 1}/${files.length || 1}`
+        );
         try {
           const binary = await fetchBinary(url);
           let base = safeName(file.trackTitle, `file_${file.fileId}`);
@@ -107,27 +124,63 @@
           stats.filesFail += 1;
         }
         await sleep(delayFile);
+        fi += 1;
       }
       await sleep(delayProduct);
     }
 
     if (stats.filesOk === 0) throw new Error('ダウンロードできたファイルがありません');
 
-    onProgress('ZIP を生成中…');
-    const blob = await zip.generateAsync({ type: 'blob', compression: 'STORE' });
+    onProgress({ pct: 97, text: 'ZIP を生成中…' });
+    const blob = await zip.generateAsync(
+      { type: 'blob', compression: 'STORE' },
+      (meta) => {
+        const pct = 97 + Math.round(meta.percent / 100) * 2;
+        onProgress({ pct: Math.min(99, pct), text: `ZIP を生成中… ${Math.round(meta.percent)}%` });
+      }
+    );
+    onProgress({ pct: 100, text: 'ダウンロード準備完了' });
     return { blob, stats };
   }
 
-  function saveZipBlob(blob, format) {
+  function safeFileToken(str, maxLen = 36) {
+    return (str || '')
+      .replace(/[<>:"/\\|?*\x00-\x1f]/g, '_')
+      .replace(/\s+/g, '_')
+      .replace(/_+/g, '_')
+      .replace(/^_|_$/g, '')
+      .slice(0, maxLen);
+  }
+
+  function buildZipFileName(format, filterInfo = {}) {
     const stamp = new Date().toISOString().slice(0, 10);
+    const segments = ['hololive-library', format, stamp];
+    const q = filterInfo.titleQuery?.trim();
+    if (q) segments.push(`q-${safeFileToken(q, 28)}`);
+    const talents = filterInfo.talentNames || [];
+    if (talents.length) {
+      const shown = talents.slice(0, 2).map((n) => safeFileToken(n, 24));
+      let block = `talent-${shown.join('_')}`;
+      if (talents.length > 2) block += `_+${talents.length - 2}`;
+      segments.push(block);
+    }
+    if (!q && !talents.length && filterInfo.itemCount) {
+      segments.push(`${filterInfo.itemCount}items`);
+    }
+    let name = `${segments.join('-')}.zip`;
+    if (name.length > 200) name = `${name.slice(0, 196)}.zip`;
+    return name;
+  }
+
+  function saveZipBlob(blob, format, filterInfo) {
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `hololive-library-${format}-${stamp}.zip`;
+    a.download = buildZipFileName(format, filterInfo);
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 120_000);
   }
 
-  async function runFromVisibleItems(format, getVisibleLinks, onProgress) {
+  async function runFromVisibleItems(format, getVisibleLinks, onProgress, filterInfo) {
     const items = getVisibleLinks();
     if (!items.length) throw new Error('表示中の商品がありません');
 
@@ -143,7 +196,7 @@
     }
 
     const { blob, stats } = await buildFilteredZip(items, format, { onProgress });
-    saveZipBlob(blob, format);
+    saveZipBlob(blob, format, { ...filterInfo, itemCount: items.length });
     return { cancelled: false, stats };
   }
 
