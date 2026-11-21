@@ -24,6 +24,7 @@ Browser extension for batch-downloading voice files on [shop.hololivepro.com](ht
 - Items with no catalog talent match: sidebar link + non-blocking panel (top-right) when a talent filter is active.
 - Dev probe: library URL hash `#holo-dl-probe` logs `HoloOrderItemParse.probeOrderItemDownloads` for the first item.
 - **ZIP batch (phase 2):** sidebar **WAV** downloads **currently visible** products sequentially into one ZIP. File bytes are always fetched in `background.js` (shop redirect → CloudFront without page CORS). Confirms when **>10 products**. **MP3 ZIP** is disabled — use the detail-page floating panel for MP3.
+- **Sidebar layout (phase 3, partial):** talent list scrolls inside the panel; ZIP buttons and status stay visible. Panel height follows the visible viewport (`syncFilterPanelHeight` — accounts for shop header / sticky `top`, updates on scroll and resize).
 
 ### Order item detail (`content.js`)
 
@@ -42,8 +43,40 @@ Browser extension for batch-downloading voice files on [shop.hololivepro.com](ht
 ### ZIP batch (phase 2)
 
 1. Apply filters so only wanted `sky-pilot-list-item` rows are visible.
-2. Click **順次ダウンロード（WAV）** or **（MP3・推測）** in the sidebar.
+2. Click **順次ダウンロード（WAV）** in the sidebar (**MP3・未対応** is disabled on the library).
 3. Large jobs hold audio in memory until the ZIP is generated — start with a small filter if you hit browser limits.
+
+### Library batch download — phases at a glance
+
+| Phase | Goal | Status |
+|-------|------|--------|
+| **1** | Prove `fetch` + parse: WAV in HTML, MP3 needs menu | Done (`order-item-parse.js`, probe below) |
+| **2** | Filtered library → sequential WAV → one ZIP | Done (`library-batch-download.js`, `background.js`) |
+| **3** | Polish for large jobs and UI | **Partial** (see next section) |
+
+## Library batch download — phase 3 (polish & scale)
+
+Phase 3 is everything after the phase 2 MVP: safer large batches, clearer UX, and optional disk streaming. **MP3 ZIP from the library list** is a separate hard problem (signed URLs only after the per-track menu) — not part of phase 3 unless we add a dedicated approach later.
+
+### Shipped (in this repo)
+
+| Item | Where |
+|------|--------|
+| Progress bar + status text during ZIP build | `library-list.js` |
+| ZIP filename from active filters (`q-…`, `talent-…`) | `library-batch-download.js` |
+| One folder per product title, sanitized paths / track names | `library-batch-download.js` |
+| Confirm when **>10 visible products** (before start only) | `library-batch-download.js` |
+| Sidebar: only talent checklist scrolls; WAV / MP3 / progress pinned | `library-list.js` |
+| Panel height = viewport minus actual top offset (shop header), sticky-aware | `syncFilterPanelHeight` in `library-list.js` |
+
+### Not yet (remaining phase 3)
+
+| Item | Why it matters |
+|------|----------------|
+| **Pre-run estimate** (product count, track count, rough WAV size) | Avoid accidental multi‑GB jobs |
+| **Cancel during run** | Stop fetch loop without closing the tab |
+| **File System Access API** (`showSaveFilePicker`) or chunked write | Reduce peak RAM for huge ZIPs |
+| **Library MP3 ZIP** | Requires menu automation or an API — use `content.js` on detail pages today |
 
 Phase 1 probe notes remain below for debugging parse URLs.
 

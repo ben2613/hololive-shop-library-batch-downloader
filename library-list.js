@@ -10,6 +10,14 @@
 
   const { filterAside, mainWrap } = wrapTwoColumn(skyPilot);
   widenLibraryPageShell();
+  let filterHeightRaf = 0;
+  function scheduleFilterPanelHeight() {
+    cancelAnimationFrame(filterHeightRaf);
+    filterHeightRaf = requestAnimationFrame(() => syncFilterPanelHeight(filterAside));
+  }
+  scheduleFilterPanelHeight();
+  window.addEventListener('resize', scheduleFilterPanelHeight, { passive: true });
+  window.addEventListener('scroll', scheduleFilterPanelHeight, { passive: true });
   const statusEl = filterAside.querySelector('#holo-lib-status');
   const searchInput = filterAside.querySelector('#holo-lib-search');
   const talentBox = filterAside.querySelector('#holo-lib-talent-list');
@@ -195,7 +203,6 @@
         max-width: 280px;
         position: sticky;
         top: 16px;
-        max-height: calc(100vh - 300px);
         display: flex;
         flex-direction: column;
         padding: 14px;
@@ -205,8 +212,15 @@
         font-family: system-ui, -apple-system, sans-serif;
         font-size: 13px;
         box-sizing: border-box;
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden;
+      }
+      #holo-library-filter h3,
+      #holo-library-filter > label.field-label,
+      #holo-library-filter > input[type="text"],
+      #holo-lib-unmapped-link,
+      .holo-lib-batch,
+      #holo-lib-status {
+        flex-shrink: 0;
       }
       #holo-library-filter > * {
         min-width: 0;
@@ -231,8 +245,7 @@
       }
       #holo-lib-talent-list {
         flex: 1 1 auto;
-        min-height: 280px;
-        max-height: calc(100vh - 500px);
+        min-height: 0;
         overflow-y: auto;
         border: 1px solid #dadce0;
         border-radius: 6px;
@@ -472,6 +485,21 @@
       }
     `;
     document.head.appendChild(style);
+  }
+
+  const FILTER_STICKY_TOP_PX = 16;
+  const FILTER_VIEWPORT_BOTTOM_PAD_PX = 16;
+  const FILTER_PANEL_MIN_HEIGHT_PX = 280;
+
+  function syncFilterPanelHeight(aside) {
+    if (!aside) return;
+    const top = Math.max(aside.getBoundingClientRect().top, FILTER_STICKY_TOP_PX);
+    const h = Math.max(
+      FILTER_PANEL_MIN_HEIGHT_PX,
+      window.innerHeight - top - FILTER_VIEWPORT_BOTTOM_PAD_PX
+    );
+    aside.style.height = `${h}px`;
+    aside.style.maxHeight = `${h}px`;
   }
 
   function wrapTwoColumn(skyPilotEl) {
