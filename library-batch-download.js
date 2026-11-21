@@ -13,7 +13,16 @@
 
   const extApi = typeof chrome !== 'undefined' ? chrome : typeof browser !== 'undefined' ? browser : null;
 
-  function coerceArrayBuffer(data) {
+  function base64ToArrayBuffer(b64) {
+    const binary = atob(b64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+    return bytes.buffer;
+  }
+
+  function coerceArrayBuffer(res) {
+    if (res?.bufferB64) return base64ToArrayBuffer(res.bufferB64);
+    const data = res?.buffer;
     if (data instanceof ArrayBuffer) return data;
     if (ArrayBuffer.isView(data)) {
       return data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
@@ -22,15 +31,36 @@
   }
 
   async function fetchViaExtension(url, credentials) {
-    const res = await extApi.runtime.sendMessage({
-      type: 'HOLO_FETCH_BLOB',
-      url,
-      credentials,
-    });
-    if (!res?.ok) throw new Error(res?.error || 'extension fetch failed');
-    const buf = coerceArrayBuffer(res.buffer);
-    if (!buf?.byteLength) throw new Error('empty or invalid buffer from background');
-    return buf;
+    let lastErr = new Error('extension fetch failed');
+    for (let attempt = 0; attempt < 4; attempt += 1) {
+      if (attempt) await sleep(250 * attempt);
+      let res;
+      try {
+        res = await extApi.runtime.sendMessage({
+          type: 'HOLO_FETCH_BLOB',
+          url,
+          credentials,
+        });
+      } catch (err) {
+        lastErr = err;
+        continue;
+      }
+      if (res === undefined) {
+        lastErr = new Error('background が応答しません（再試行中…）');
+        continue;
+      }
+      if (!res?.ok) {
+        lastErr = new Error(res.error || 'extension fetch failed');
+        continue;
+      }
+      const buf = coerceArrayBuffer(res);
+      if (!buf?.byteLength) {
+        lastErr = new Error('empty or invalid buffer from background');
+        continue;
+      }
+      return buf;
+    }
+    throw lastErr;
   }
 
   /** Always use extension background (avoids CORS after shop → CloudFront redirect). */
