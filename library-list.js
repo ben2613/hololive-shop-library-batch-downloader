@@ -60,6 +60,53 @@
     updateUnmappedPopup(true, searchInput.value.trim().toLowerCase(), true);
   });
 
+  const btnBatchWav = filterAside.querySelector('#holo-lib-dl-wav');
+  const btnBatchMp3 = filterAside.querySelector('#holo-lib-dl-mp3');
+
+  function visibleListItemLinks() {
+    return [...document.querySelectorAll('.sky-pilot-files-list a.sky-pilot-list-item')].filter(
+      (a) => a.style.display !== 'none'
+    );
+  }
+
+  async function runLibraryZipBatch(format) {
+    if (!globalThis.HoloLibraryBatchZip) {
+      statusEl.textContent = 'ZIP モジュールが読み込まれていません';
+      return;
+    }
+    const batchButtons = [btnBatchWav, btnBatchMp3];
+    batchButtons.forEach((b) => {
+      b.disabled = true;
+    });
+    try {
+      const result = await globalThis.HoloLibraryBatchZip.runFromVisibleItems(
+        format,
+        visibleListItemLinks,
+        (msg) => {
+          statusEl.textContent = msg;
+        }
+      );
+      if (result?.cancelled) {
+        statusEl.textContent = 'キャンセルしました';
+        return;
+      }
+      if (result?.stats) {
+        const s = result.stats;
+        statusEl.textContent = `ZIP 完了 · ${s.filesOk} ファイル / ${s.products} 商品` + (s.filesFail ? ` · 失敗 ${s.filesFail}` : '');
+      }
+    } catch (err) {
+      statusEl.textContent = `ZIP 失敗: ${err.message}`;
+      console.error('[holo-library-batch]', err);
+    } finally {
+      batchButtons.forEach((b) => {
+        b.disabled = false;
+      });
+    }
+  }
+
+  btnBatchWav.addEventListener('click', () => runLibraryZipBatch('wav'));
+  btnBatchMp3.addEventListener('click', () => runLibraryZipBatch('mp3'));
+
   function injectStyles() {
     if (document.getElementById('holo-library-styles')) return;
     const style = document.createElement('style');
@@ -69,7 +116,7 @@
       .Container:has(#holo-library-layout),
       .holo-library-shell-wide.Container,
       #container.holo-library-shell-wide {
-        max-width: min(1680px, calc(100vw - 40px)) !important;
+        max-width: min(1320px, calc(100vw - 40px)) !important;
         width: 100% !important;
       }
       .holo-library-layout {
@@ -77,7 +124,7 @@
         gap: 20px;
         align-items: flex-start;
         width: 100%;
-        max-width: min(1680px, calc(100vw - 40px));
+        max-width: min(1320px, calc(100vw - 40px));
         margin: 0 auto;
         text-align: left;
         box-sizing: border-box;
@@ -86,7 +133,7 @@
         flex: 0 0 280px;
         position: sticky;
         top: 16px;
-        max-height: calc(100vh - 32px);
+        max-height: calc(100vh - 300px);
         display: flex;
         flex-direction: column;
         padding: 14px;
@@ -131,6 +178,12 @@
         padding: 3px 0;
         cursor: pointer;
         font-size: 12px;
+      }
+      #holo-lib-talent-list .holo-talent-count {
+        color: #5f6368;
+        font-size: 11px;
+        font-variant-numeric: tabular-nums;
+        flex-shrink: 0;
       }
       #holo-lib-talent-list label.row.hidden { display: none; }
       #holo-lib-talent-list .holo-talent-root { margin-bottom: 10px; }
@@ -268,6 +321,31 @@
         text-align: left;
         text-decoration: underline;
       }
+      .holo-lib-batch {
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px solid #dadce0;
+      }
+      .holo-lib-batch button {
+        display: block;
+        width: 100%;
+        margin-top: 6px;
+        padding: 8px 10px;
+        border: none;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #fff;
+        cursor: pointer;
+      }
+      .holo-lib-batch button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      #holo-lib-dl-wav { background: #0f9d58; }
+      #holo-lib-dl-wav:hover:not(:disabled) { background: #0b8043; }
+      #holo-lib-dl-mp3 { background: #1a73e8; }
+      #holo-lib-dl-mp3:hover:not(:disabled) { background: #1557b0; }
     `;
     document.head.appendChild(style);
   }
@@ -287,6 +365,11 @@
       <input type="text" id="holo-lib-talent-search" placeholder="タレント名で絞り込み" autocomplete="off" />
       <div id="holo-lib-talent-list"></div>
       <button type="button" id="holo-lib-unmapped-link"></button>
+      <div class="holo-lib-batch">
+        <span class="field-label">表示中の商品を ZIP</span>
+        <button type="button" id="holo-lib-dl-wav">順次ダウンロード（WAV）</button>
+        <button type="button" id="holo-lib-dl-mp3" disabled title="ZIP の MP3 は未対応。詳細ページの一括 MP3 を使用">順次ダウンロード（MP3・未対応）</button>
+      </div>
       <div id="holo-lib-status">準備中…</div>
     `;
 
@@ -594,9 +677,14 @@
           cb.dataset.nameJa = t.name_ja;
           cb.dataset.nameEn = t.name_en || '';
           const span = document.createElement('span');
+          span.className = 'holo-talent-name';
           span.textContent = t.name_ja;
+          const countSpan = document.createElement('span');
+          countSpan.className = 'holo-talent-count';
+          countSpan.textContent = '';
           label.appendChild(cb);
           label.appendChild(span);
+          label.appendChild(countSpan);
           subEl.appendChild(label);
         }
 
@@ -630,6 +718,29 @@
     });
   }
 
+  function countProductsForTalent(names, titleQuery) {
+    const needles = names.filter(Boolean);
+    if (!needles.length) return 0;
+    const q = titleQuery || '';
+    let n = 0;
+    for (const a of document.querySelectorAll('.sky-pilot-files-list a.sky-pilot-list-item')) {
+      const title = a.dataset.holoTitle || '';
+      if (q && !normalizedIncludes(title, q)) continue;
+      if (needles.some((name) => normalizedIncludes(title, name))) n += 1;
+    }
+    return n;
+  }
+
+  function updateTalentProductCounts(titleQuery) {
+    for (const label of talentBox.querySelectorAll('label.row')) {
+      const cb = label.querySelector('input[type="checkbox"]');
+      const countEl = label.querySelector('.holo-talent-count');
+      if (!cb || !countEl) continue;
+      const n = countProductsForTalent([cb.dataset.nameJa, cb.dataset.nameEn], titleQuery);
+      countEl.textContent = `(${n})`;
+    }
+  }
+
   function applyFilters() {
     const q = searchInput.value.trim();
     const talentNames = selectedTalentNames();
@@ -656,5 +767,6 @@
     }
 
     updateUnmappedPopup(talentNames.length > 0, q);
+    updateTalentProductCounts(q);
   }
 })();

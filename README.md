@@ -9,7 +9,9 @@ Browser extension for batch-downloading voice files on [shop.hololivepro.com](ht
 | `manifest.json` | MV3 content scripts on `*.hololivepro.com` |
 | `content.js` | Floating panel on **order item** detail pages: sequential click-through download for all tracks (MP3 / WAV) |
 | `library-list.js` | **Digital library** list (`/apps/downloads/orders/{customerId}`): merge all pagination, two-column layout, filters |
-| `order-item-parse.js` | Phase 1: `fetch` + parse order-item HTML for WAV URLs / file IDs (`HoloOrderItemParse`) |
+| `order-item-parse.js` | `fetch` + parse order-item HTML for WAV URLs / file IDs (`HoloOrderItemParse`) |
+| `library-batch-download.js` | Phase 2: filtered library → sequential fetch → ZIP (`HoloLibraryBatchZip`) |
+| `vendor/jszip.min.js` | JSZip 3.10.1 (bundled) |
 | `talent-structure.json` | Talent tree for library filters (regenerate from `/pages/talent`; see below) |
 | `popup.html` / `popup.js` | **Unused** — no `action` / `default_popup` in `manifest.json` (old MV2-style flow) |
 
@@ -17,10 +19,11 @@ Browser extension for batch-downloading voice files on [shop.hololivepro.com](ht
 
 - Fetches every `line_items_page` with session cookies and merges `a.sky-pilot-list-item` into one list.
 - Left sidebar: title search, talent checklist (OR) from `talent-structure.json`, status line.
-- Wider page shell so the list is not squeezed after adding the filter column (up to ~1680px).
+- Slightly wider page shell with the filter column (up to ~1320px; was 1200px before the sidebar).
 - Talent matching uses Unicode **NFKC** and strips status prefixes **`【卒業】`**, **`【配信活動終了】`**, **`【退職】`** only when matching titles to catalog names.
 - Items with no catalog talent match: sidebar link + non-blocking panel (top-right) when a talent filter is active.
 - Dev probe: library URL hash `#holo-dl-probe` logs `HoloOrderItemParse.probeOrderItemDownloads` for the first item.
+- **ZIP batch (phase 2):** sidebar **WAV** downloads **currently visible** products sequentially into one ZIP. File bytes are always fetched in `background.js` (shop redirect → CloudFront without page CORS). Confirms when **>10 products**. **MP3 ZIP** is disabled — use the detail-page floating panel for MP3.
 
 ### Order item detail (`content.js`)
 
@@ -36,9 +39,13 @@ Browser extension for batch-downloading voice files on [shop.hololivepro.com](ht
 | Order item detail | batch panel | no-op (early exit) | loaded, idle unless probed |
 | Other shop pages | no-op | no-op | idle |
 
-### Not implemented yet
+### ZIP batch (phase 2)
 
-- Filtered library → ZIP batch download (phase 2; WAV via parse is feasible, MP3 needs menu/API work — see [phase 1](#library-batch-download--phase-1-fetch--parse-probe)).
+1. Apply filters so only wanted `sky-pilot-list-item` rows are visible.
+2. Click **順次ダウンロード（WAV）** or **（MP3・推測）** in the sidebar.
+3. Large jobs hold audio in memory until the ZIP is generated — start with a small filter if you hit browser limits.
+
+Phase 1 probe notes remain below for debugging parse URLs.
 
 ## `talent-structure.json`
 
@@ -185,6 +192,17 @@ The browser downloads `talent-structure.json`. Replace the file in this folder i
 4. **Download batch buttons** only on `.../order_items/...` detail pages (`content.js`)
 
 After changing `manifest.json` or scripts, reload the extension.
+
+### Background script (browser difference)
+
+ZIP downloads call `background.js` to fetch CloudFront without page CORS.
+
+| Browser | `manifest.json` `background` |
+|---------|------------------------------|
+| **Firefox** (or when service worker is disabled) | `"scripts": ["background.js"]` ← default in this repo |
+| **Chrome / Edge (Chromium)** | `"service_worker": "background.js"` (replace `scripts` — MV3 does not use `background.scripts` on Chromium) |
+
+If Chromium rejects the extension, swap the `background` block to `service_worker` only and remove `scripts`.
 
 ## Library batch download — phase 1 (fetch / parse probe)
 

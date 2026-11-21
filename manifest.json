@@ -1,12 +1,26 @@
 {
   "manifest_version": 3,
   "name": "Hololive 語音懸浮批量下載器",
-  "version": "3.0",
+  "version": "3.1.1",
   "description": "在語音頁面右側顯示懸浮下載按鈕",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "host_permissions": [
+    "https://shop.hololivepro.com/*",
+    "https://*.hololivepro.com/*",
+    "https://*.cloudfront.net/*"
+  ],
   "content_scripts": [
     {
       "matches": ["*://shop.hololivepro.com/*", "*://*.hololivepro.com/*"],
-      "js": ["content.js", "order-item-parse.js", "library-list.js"],
+      "js": [
+        "content.js",
+        "order-item-parse.js",
+        "vendor/jszip.min.js",
+        "library-batch-download.js",
+        "library-list.js"
+      ],
       "run_at": "document_idle"
     }
   ],
