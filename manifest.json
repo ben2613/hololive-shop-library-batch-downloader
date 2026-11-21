@@ -4,7 +4,7 @@
   "version": "3.1.1",
   "description": "在語音頁面右側顯示懸浮下載按鈕",
   "background": {
-    "scripts": ["background.js"]
+    "service_worker": "background.js"
   },
   "host_permissions": [
     "https://shop.hololivepro.com/*",

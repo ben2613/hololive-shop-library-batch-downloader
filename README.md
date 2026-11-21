@@ -230,12 +230,12 @@ After changing `manifest.json` or scripts, reload the extension.
 
 ZIP downloads call `background.js` to fetch CloudFront without page CORS.
 
-| Browser | `manifest.json` `background` |
-|---------|------------------------------|
-| **Firefox** (or when service worker is disabled) | `"scripts": ["background.js"]` ← default in this repo |
-| **Chrome / Edge (Chromium)** | `"service_worker": "background.js"` (replace `scripts` — MV3 does not use `background.scripts` on Chromium) |
+| Browser | Notes |
+|---------|--------|
+| **Chrome / Edge / Brave** | Load unpacked — `manifest.json` uses MV3 `"service_worker": "background.js"`. |
+| **Firefox** | Recent Firefox (MV3) also accepts `service_worker`. If an older build only allows `background.scripts`, temporarily replace the `background` block with `"scripts": ["background.js"]` (MV2-style; not valid in Chrome). |
 
-If Chromium rejects the extension, swap the `background` block to `service_worker` only and remove `scripts`.
+After changing `manifest.json`, reload the extension in the browser’s extension page.
 
 ## Library batch download — phase 1 (fetch / parse probe)
 
