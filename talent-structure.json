@@ -1,0 +1,962 @@
+{
+  "source": "https://shop.hololivepro.com/pages/talent",
+  "generatedAt": "2026-11-21T13:40:51.039Z",
+  "rootGroups": [
+    "ホロライブ",
+    "ホロスターズ",
+    "HOLOSTARS English",
+    "COVER",
+    "卒業"
+  ],
+  "embeddedJson": {
+    "QuicklookTalentDict": {
+      "count": 203,
+      "fields": [
+        "name_ja",
+        "name_en",
+        "handle",
+        "image",
+        "theme_color"
+      ],
+      "id": "QuicklookTalentDict",
+      "note": "flat list; no group/generation"
+    },
+    "hierarchy": "DOM member_item gr/ge classes + gene_lists labels (not in QuicklookTalentDict)"
+  },
+  "tree": {
+    "COVER": {
+      "holoAN": [
+        {
+          "collection": "/collections/izukimichiru",
+          "handle": "izukimichiru",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Izuki_Michiru_icon_942a29a4-4f07-442b-b553-66791472efa2.png?v=1762507427&width=120",
+          "name_en": "Izuki Michiru",
+          "name_ja": "井月みちる",
+          "theme_color": "#cb4b85"
+        },
+        {
+          "collection": "/collections/hanazonosayaka",
+          "handle": "hanazonosayaka",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Hanazono_Sayaka_icon_ce807ac0-3959-46f0-a2f2-5a961c20cc60.png?v=1762746501&width=120",
+          "name_en": "Hanazono Sayaka",
+          "name_ja": "花園さやか",
+          "theme_color": "#f3d086"
+        },
+        {
+          "collection": "/collections/kazeshiroyuki",
+          "handle": "kazeshiroyuki",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/TL_KazeshiroYuki.png?v=1767325542&width=120",
+          "name_en": "Kazeshiro Yuki",
+          "name_ja": "風白ゆき",
+          "theme_color": "#92c3e8"
+        }
+      ]
+    },
+    "HOLOSTARS English": {
+      "ARMIS": [
+        {
+          "collection": "/collections/jurardtrexford",
+          "handle": "jurardtrexford",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/5009_b735e142-f0c3-4e68-89fa-9b1cf74e03f7.png?v=1744284352&width=120",
+          "name_en": "Jurard T Rexford",
+          "name_ja": "ジュラルド・ティー・レクスフォード",
+          "theme_color": "#383635"
+        },
+        {
+          "collection": "/collections/goldbullet",
+          "handle": "goldbullet",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/10_5c488203-d469-4409-ac9f-4b3b7bf9c9f9.png?v=1744284379&width=120",
+          "name_en": "Goldbullet",
+          "name_ja": "ゴールドブレット",
+          "theme_color": "#0a6463"
+        },
+        {
+          "collection": "/collections/octavio",
+          "handle": "octavio",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/11_eac197d7-34d9-4461-a234-78642eb9e384.png?v=1744284410&width=120",
+          "name_en": "Octavio",
+          "name_ja": "オクタビオ",
+          "theme_color": "#1c449a"
+        },
+        {
+          "collection": "/collections/crimzonruze",
+          "handle": "crimzonruze",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/12_956b122d-a53e-4752-8c3a-f153fae15569.png?v=1744284443&width=120",
+          "name_en": "Crimzon Ruze",
+          "name_ja": "クリムゾン・ルーズ",
+          "theme_color": "#e60012"
+        }
+      ],
+      "TEMPUS": [
+        {
+          "collection": "/collections/regisaltare",
+          "handle": "regisaltare",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/1_a84d4d5d-a5c7-4dbc-8c52-2b3a15caf794.png?v=1720498697&width=120",
+          "name_en": "Regis Altare",
+          "name_ja": "リージス・アルテア",
+          "theme_color": "#54acdc"
+        },
+        {
+          "collection": "/collections/axelsyrios",
+          "handle": "axelsyrios",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/3_9a2f64fe-1c4e-40aa-a8e9-6aa3dac2cb5a.png?v=1720498665&width=120",
+          "name_en": "Axel Syrios",
+          "name_ja": "アクセル・シリオス",
+          "theme_color": "#ff9603"
+        },
+        {
+          "collection": "/collections/gavisbettel",
+          "handle": "gavisbettel",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/5005_1176df71-daca-4f69-a760-ae4d4fdf25cd.png?v=1720498700&width=120",
+          "name_en": "Gavis Bettel",
+          "name_ja": "ガビス・ベッテル",
+          "theme_color": "#eb3da2"
+        },
+        {
+          "collection": "/collections/machinaxflayon",
+          "handle": "machinaxflayon",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/6__X_727809cb-703c-4fa9-b481-d230d14261ce.png?v=1783486802&width=120",
+          "name_en": "Machina X Flayon",
+          "name_ja": "マキナ・X・フレオン",
+          "theme_color": "#dd3f34"
+        },
+        {
+          "collection": "/collections/banzoinhakka",
+          "handle": "banzoinhakka",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/7_15f09294-da05-4805-8255-0cb9207b6058.png?v=1720498670&width=120",
+          "name_en": "Banzoin Hakka",
+          "name_ja": "万象院ハッカ",
+          "theme_color": "#c99bf6"
+        },
+        {
+          "collection": "/collections/josuijishinri",
+          "handle": "josuijishinri",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/8_292497bb-9ee3-472f-87f1-229ceb940f84.png?v=1720498669&width=120",
+          "name_en": "Josuiji Shinri",
+          "name_ja": "定水寺シンリ",
+          "theme_color": "#b44d32"
+        }
+      ]
+    },
+    "ホロスターズ": {
+      "1期生": [
+        {
+          "collection": "/collections/kanadeizuru",
+          "handle": "kanadeizuru",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/messageImage_1626783693247_4b7a7d94-157c-48a8-895b-366da5af51aa.jpg?v=1744357405&width=120",
+          "name_en": "Kanade Izuru",
+          "name_ja": "奏手イヅル",
+          "theme_color": "#122268"
+        },
+        {
+          "collection": "/collections/hanasakimiyabi",
+          "handle": "hanasakimiyabi",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/180245_190730_a49e037a-7d3c-459b-bf30-911f9bd26bb4.png?v=1720498617&width=120",
+          "name_en": "Hanasaki Miyabi",
+          "name_ja": "【配信活動終了】花咲みやび",
+          "theme_color": "#ff2f3f"
+        },
+        {
+          "collection": "/collections/arurandeisu",
+          "handle": "arurandeisu",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/TL_Arurandeisu.png?v=1777631371&width=120",
+          "name_en": "Arurandeisu",
+          "name_ja": "【配信活動終了】アルランディス",
+          "theme_color": "#2f6f4f"
+        },
+        {
+          "collection": "/collections/rikka",
+          "handle": "rikka",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/messageImage_1626783731196_731fd615-d5f0-4c6c-a017-cd24d5f0a939.jpg?v=1720498620&width=120",
+          "name_en": "Rikka",
+          "name_ja": "【配信活動終了】律可",
+          "theme_color": "#eab3b8"
+        }
+      ],
+      "2期生": [
+        {
+          "collection": "/collections/astelleda",
+          "handle": "astelleda",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/TL_Astel_Leda.png?v=1763710853&width=120",
+          "name_en": "Astel Leda",
+          "name_ja": "アステル・レダ",
+          "theme_color": "#0047ab"
+        },
+        {
+          "collection": "/collections/kishidotemma",
+          "handle": "kishidotemma",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/messageImage_1626783745235_476ecc0a-25e6-45fe-8ef6-7061060f8814.jpg?v=1720498621&width=120",
+          "name_en": "Kishido Temma",
+          "name_ja": "【配信活動終了】岸堂天真",
+          "theme_color": "#fff799"
+        },
+        {
+          "collection": "/collections/yukokuroberu",
+          "handle": "yukokuroberu",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/messageImage_1626783753215_bf82030f-dce3-479d-b820-69ea62cfafd2.jpg?v=1720498623&width=120",
+          "name_en": "Yukoku Roberu",
+          "name_ja": "夕刻ロベル",
+          "theme_color": "#eb6e00"
+        }
+      ],
+      "3期生": [
+        {
+          "collection": "/collections/kageyamashien",
+          "handle": "kageyamashien",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/messageImage_1626783760994_6c8c0353-6c75-4e74-8095-c81ef16e78d8.jpg?v=1720498623&width=120",
+          "name_en": "Kageyama Shien",
+          "name_ja": "【配信活動終了】影山シエン",
+          "theme_color": "#7a559b"
+        },
+        {
+          "collection": "/collections/aragamioga",
+          "handle": "aragamioga",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/messageImage_1626783765680_3e6e73be-693c-4c9a-b8c4-9b5e9f6209cb.jpg?v=1720498626&width=120",
+          "name_en": "Aragami Oga",
+          "name_ja": "荒咬オウガ",
+          "theme_color": "#93ec2d"
+        }
+      ],
+      "UPROAR!!": [
+        {
+          "collection": "/collections/yatogamifuma",
+          "handle": "yatogamifuma",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/10_54234523-3718-404f-8063-c9ae74719d43.png?v=1747020326&width=120",
+          "name_en": "Yatogami Fuma",
+          "name_ja": "夜十神封魔",
+          "theme_color": "#fabf13"
+        },
+        {
+          "collection": "/collections/utsugiuyu",
+          "handle": "utsugiuyu",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/11_bc16042a-d2c6-48b8-9835-7a36eaa92ae5.png?v=1720498660&width=120",
+          "name_en": "Utsugi Uyu",
+          "name_ja": "羽継烏有",
+          "theme_color": "#f7ede3"
+        },
+        {
+          "collection": "/collections/minaserio",
+          "handle": "minaserio",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/13_d854550e-fae2-49f2-b014-50b0c2f18988.png?v=1781075149&width=120",
+          "name_en": "Minase Rio",
+          "name_ja": "【配信活動終了】水無世燐央",
+          "theme_color": "#a4a8d4"
+        }
+      ]
+    },
+    "ホロライブ": {
+      "0期生": [
+        {
+          "collection": "/collections/tokinosora",
+          "handle": "tokinosora",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/766395_704791_68301bcd-cd45-47d9-80e9-72204131b227.png?v=1788783614&width=120",
+          "name_en": "Tokino Sora",
+          "name_ja": "ときのそら",
+          "theme_color": "#6872f1"
+        },
+        {
+          "collection": "/collections/robocosan",
+          "handle": "robocosan",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/05dfrxBd_400x400_opgdih_5845062d-6490-4854-bcb1-727a98f0b188.png?v=1720498604&width=120",
+          "name_en": "Robocosan",
+          "name_ja": "ロボ子さん",
+          "theme_color": "#ee82ee"
+        },
+        {
+          "collection": "/collections/azki",
+          "handle": "azki",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/azki_thumb_7fcfc66c-0149-4adf-bac1-d3f62b18b1c3.png?v=1720498672&width=120",
+          "name_en": "AZKi",
+          "name_ja": "AZKi",
+          "theme_color": "#e22b6d"
+        },
+        {
+          "collection": "/collections/sakuramiko",
+          "handle": "sakuramiko",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/942505_354389_cbd80c85-9518-4482-b95a-f72989d20d61.png?v=1720498604&width=120",
+          "name_en": "Sakura Miko",
+          "name_ja": "さくらみこ",
+          "theme_color": "#fe9297"
+        },
+        {
+          "collection": "/collections/hoshimachisuisei",
+          "handle": "hoshimachisuisei",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/hoshimachi_suisei_thumb_png_3fe0f51c-8895-4e1b-9f19-4595c7ebb12f.png?v=1754036898&width=120",
+          "name_en": "Hoshimachi Suisei",
+          "name_ja": "星街すいせい",
+          "theme_color": "#6cb1ed"
+        }
+      ],
+      "1期生": [
+        {
+          "collection": "/collections/akirosenthal",
+          "handle": "akirosenthal",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/aki_rosenthal_thumb_a813d48f-a29e-4750-8384-f63cba96589d.png?v=1764752843&width=120",
+          "name_en": "Aki Rosenthal",
+          "name_ja": "アキ・ローゼンタール",
+          "theme_color": "#bdff52"
+        },
+        {
+          "collection": "/collections/akaihaato",
+          "handle": "akaihaato",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/akai_haato_thumb_f6e8b9ea-ea0e-4f82-b84a-07028ef33905.png?v=1756879719&width=120",
+          "name_en": "Akai Haato",
+          "name_ja": "赤井はあと",
+          "theme_color": "#e73657"
+        },
+        {
+          "collection": "/collections/shirakamifubuki",
+          "handle": "shirakamifubuki",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/shirakami_fubuki_thumb_27ff3c6f-72cf-42b9-a68b-6e0317238ef3.png?v=1720498675&width=120",
+          "name_en": "Shirakami Fubuki",
+          "name_ja": "白上フブキ",
+          "theme_color": "#a1dffd"
+        },
+        {
+          "collection": "/collections/natsuiromatsuri",
+          "handle": "natsuiromatsuri",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/natsuiro_matsuri_thumb_72c0c48c-6060-45a7-900b-6ce2c6d321b1.png?v=1743127096&width=120",
+          "name_en": "Natsuiro Matsuri",
+          "name_ja": "夏色まつり",
+          "theme_color": "#f0c060"
+        }
+      ],
+      "2期生": [
+        {
+          "collection": "/collections/nakiriayame",
+          "handle": "nakiriayame",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/nakiri_ayame_thumb_920f4b8d-610d-4fc9-a877-928ebacdca38.png?v=1729576272&width=120",
+          "name_en": "Nakiri Ayame",
+          "name_ja": "百鬼あやめ",
+          "theme_color": "#c7284f"
+        },
+        {
+          "collection": "/collections/yuzukichoco",
+          "handle": "yuzukichoco",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/yuzuki_choco_thumb_f843e8e5-c2e8-4efd-91be-8f9d9ed9ad82.png?v=1776851412&width=120",
+          "name_en": "Yuzuki Choco",
+          "name_ja": "癒月ちょこ",
+          "theme_color": "#dc415c"
+        },
+        {
+          "collection": "/collections/oozorasubaru",
+          "handle": "oozorasubaru",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/TL_Oozora_Subaru.png?v=1775026838&width=120",
+          "name_en": "Oozora Subaru",
+          "name_ja": "大空スバル",
+          "theme_color": "#e8ed79"
+        }
+      ],
+      "3期生": [
+        {
+          "collection": "/collections/usadapekora",
+          "handle": "usadapekora",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/usada_pekora_thumb_8673447f-a69c-4faa-ad0f-c10652a85d8c.png?v=1733804068&width=120",
+          "name_en": "Usada Pekora",
+          "name_ja": "兎田ぺこら",
+          "theme_color": "#8dbdf5"
+        },
+        {
+          "collection": "/collections/shiranuiflare",
+          "handle": "shiranuiflare",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/shiranui_flare_thumb_2a6c104e-d19a-4c5e-a816-2875f29de096.png?v=1762325960&width=120",
+          "name_en": "Shiranui Flare",
+          "name_ja": "不知火フレア",
+          "theme_color": "#fc5e24"
+        },
+        {
+          "collection": "/collections/shiroganenoel",
+          "handle": "shiroganenoel",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/shirogane_noel_thumb_4ffcf9d8-f598-4a2a-820a-992277e69e69.png?v=1771399121&width=120",
+          "name_en": "Shirogane Noel",
+          "name_ja": "白銀ノエル",
+          "theme_color": "#d2dcdc"
+        },
+        {
+          "collection": "/collections/houshoumarine",
+          "handle": "houshoumarine",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/houshou_marine_thumb_5d010f94-aab3-433d-9366-5fd16bc6c729.png?v=1743127063&width=120",
+          "name_en": "Houshou Marine",
+          "name_ja": "宝鐘マリン",
+          "theme_color": "#d40032"
+        }
+      ],
+      "4期生": [
+        {
+          "collection": "/collections/tsunomakiwatame",
+          "handle": "tsunomakiwatame",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/tsunomaki_watame_thumb_8ebdb730-8e7e-463f-98e9-9ae696c4575f.png?v=1720498614&width=120",
+          "name_en": "Tsunomaki Watame",
+          "name_ja": "角巻わため",
+          "theme_color": "#fcf5c1"
+        },
+        {
+          "collection": "/collections/tokoyamitowa",
+          "handle": "tokoyamitowa",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/tokoyami_towa_thumb_6d13a662-6c4a-4856-a082-2e0946640f9f.png?v=1789013906&width=120",
+          "name_en": "Tokoyami Towa",
+          "name_ja": "常闇トワ",
+          "theme_color": "#ee2aa8"
+        },
+        {
+          "collection": "/collections/himemoriluna",
+          "handle": "himemoriluna",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/himemori_luna_thumb_8e66bbd0-4e40-4b9b-acd2-6238e7b160c1.png?v=1760410608&width=120",
+          "name_en": "Himemori Luna",
+          "name_ja": "姫森ルーナ",
+          "theme_color": "#faa3d5"
+        }
+      ],
+      "5期生": [
+        {
+          "collection": "/collections/yukihanalamy",
+          "handle": "yukihanalamy",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/yukihana_lamy_thumb_5dc9ca5a-46fc-436c-a335-d79937b16057.png?v=1745395315&width=120",
+          "name_en": "Yukihana Lamy",
+          "name_ja": "雪花ラミィ",
+          "theme_color": "#47a3f4"
+        },
+        {
+          "collection": "/collections/momosuzunene",
+          "handle": "momosuzunene",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/momosuzu_nene_thumb_a1c92915-81c4-4a03-9e9a-4ed4d1deffeb.png?v=1720498614&width=120",
+          "name_en": "Momosuzu Nene",
+          "name_ja": "桃鈴ねね",
+          "theme_color": "#f78e2a"
+        },
+        {
+          "collection": "/collections/shishirobotan",
+          "handle": "shishirobotan",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/shishiro_botan_thumb_f96fcb61-a29f-449d-b62f-0d513fe088e5.png?v=1720498693&width=120",
+          "name_en": "Shishiro Botan",
+          "name_ja": "獅白ぼたん",
+          "theme_color": "#665f6d"
+        },
+        {
+          "collection": "/collections/omarupolka",
+          "handle": "omarupolka",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/omaru_polka_thumb_123f3592-3675-4cac-a2f7-cf5c0766fe26.png?v=1781075203&width=120",
+          "name_en": "Omaru Polka",
+          "name_ja": "尾丸ポルカ",
+          "theme_color": "#e8306e"
+        }
+      ],
+      "AREA15": [
+        {
+          "collection": "/collections/ayundarisu",
+          "handle": "ayundarisu",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Ayunda_Risu_6f647716-c2a1-42dd-a268-56a660ce1836.png?v=1776851343&width=120",
+          "name_en": "Ayunda Risu",
+          "name_ja": "アユンダ・リス",
+          "theme_color": "#f6bbbb"
+        },
+        {
+          "collection": "/collections/moonahoshinova",
+          "handle": "moonahoshinova",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Moona_Hoshinova_dcbf0aa1-6382-4519-9ce6-b1351452737a.png?v=1720498620&width=120",
+          "name_en": "Moona Hoshinova",
+          "name_ja": "ムーナ・ホシノヴァ",
+          "theme_color": "#b19ddc"
+        },
+        {
+          "collection": "/collections/airaniiofifteen",
+          "handle": "airaniiofifteen",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Airani_Iofifteen_6bd35fc2-7628-4864-8440-d45b3d2af9ae.png?v=1793782113&width=120",
+          "name_en": "Airani Iofifteen",
+          "name_ja": "アイラニ・イオフィフティーン",
+          "theme_color": "#b3ee55"
+        }
+      ],
+      "Advent": [
+        {
+          "collection": "/collections/shiorinovella",
+          "handle": "shiorinovella",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/4013_e3d4f31f-a483-4011-b1fd-6cc297bfd2d4.png?v=1725328974&width=120",
+          "name_en": "Shiori Novella",
+          "name_ja": "シオリ・ノヴェラ",
+          "theme_color": "#b8a0cd"
+        },
+        {
+          "collection": "/collections/kosekibijou",
+          "handle": "kosekibijou",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/4014_ea82e64b-523a-43ab-b974-815c1ea77e3d.png?v=1725328947&width=120",
+          "name_en": "Koseki Bijou",
+          "name_ja": "古石ビジュー",
+          "theme_color": "#6e5bf4"
+        },
+        {
+          "collection": "/collections/nerissaravencroft",
+          "handle": "nerissaravencroft",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/4015_f05872ce-50ad-455c-a65b-f19667ffdf09.png?v=1725328921&width=120",
+          "name_en": "Nerissa Ravencroft",
+          "name_ja": "ネリッサ・レイヴンクロフト",
+          "theme_color": "#2233fb"
+        },
+        {
+          "collection": "/collections/fuwawaabyssgard",
+          "handle": "fuwawaabyssgard",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/4016_df5f6c57-4539-4075-8604-1bb007205e4c.png?v=1725328892&width=120",
+          "name_en": "Fuwawa Abyssgard",
+          "name_ja": "フワワ・アビスガード",
+          "theme_color": "#67b2ff"
+        },
+        {
+          "collection": "/collections/mococoabyssgard",
+          "handle": "mococoabyssgard",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/4017_11e92402-4650-4815-8008-219f17f77de9.png?v=1744284285&width=120",
+          "name_en": "Mococo Abyssgard",
+          "name_ja": "モココ・アビスガード",
+          "theme_color": "#f7a6ca"
+        }
+      ],
+      "FLOW GLOW": [
+        {
+          "collection": "/collections/isakiriona",
+          "handle": "isakiriona",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Isaki_Riona.png?v=1764238233&width=120",
+          "name_en": "Isaki Riona",
+          "name_ja": "響咲リオナ",
+          "theme_color": "#fe3480"
+        },
+        {
+          "collection": "/collections/koganeiniko",
+          "handle": "koganeiniko",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Koganei_Niko.png?v=1764238312&width=120",
+          "name_en": "Koganei Niko",
+          "name_ja": "虎金妃笑虎",
+          "theme_color": "#f58017"
+        },
+        {
+          "collection": "/collections/mizumiyasu",
+          "handle": "mizumiyasu",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Mizumiya_Su.png?v=1764238337&width=120",
+          "name_en": "Mizumiya Su",
+          "name_ja": "水宮枢",
+          "theme_color": "#71e5ff"
+        },
+        {
+          "collection": "/collections/rindochihaya",
+          "handle": "rindochihaya",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Rindo_Chihaya.png?v=1764238360&width=120",
+          "name_en": "Rindo Chihaya",
+          "name_ja": "輪堂千速",
+          "theme_color": "#37baba"
+        },
+        {
+          "collection": "/collections/kikiraravivi",
+          "handle": "kikiraravivi",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Kikirara_Vivi.png?v=1764238385&width=120",
+          "name_en": "Kikirara Vivi",
+          "name_ja": "綺々羅々ヴィヴィ",
+          "theme_color": "#ff90cc"
+        }
+      ],
+      "Justice": [
+        {
+          "collection": "/collections/elizabethrosebloodflame",
+          "handle": "elizabethrosebloodflame",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/elizabeth_Rose_bloodflame_thumb_cd9861df-84ea-4153-90b8-d825e4f30aa1.png?v=1755572977&width=120",
+          "name_en": "Elizabeth Rose Bloodflame",
+          "name_ja": "エリザベス・ローズ・ブラッドフレイム",
+          "theme_color": "#c7383b"
+        },
+        {
+          "collection": "/collections/gigimurin",
+          "handle": "gigimurin",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/gigi_murin_thumb_f18124e0-0725-4124-83f0-f193e429aa72.png?v=1755573033&width=120",
+          "name_en": "Gigi Murin",
+          "name_ja": "ジジ・ムリン",
+          "theme_color": "#fdb440"
+        },
+        {
+          "collection": "/collections/ceciliaimmergreen",
+          "handle": "ceciliaimmergreen",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/cecilia_immergreen_thumb_a54974e8-6ba9-4250-af8c-7cc7da48b3c9.png?v=1755573011&width=120",
+          "name_en": "Cecilia Immergreen",
+          "name_ja": "セシリア・イマーグリーン",
+          "theme_color": "#119a5c"
+        },
+        {
+          "collection": "/collections/raorapanthera",
+          "handle": "raorapanthera",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/raora_panthera_thumb_bc028862-9a0f-44a1-a5b4-8071c7f95880.png?v=1755573057&width=120",
+          "name_en": "Raora Panthera",
+          "name_ja": "ラオーラ・パンテーラ",
+          "theme_color": "#f087a9"
+        }
+      ],
+      "Myth": [
+        {
+          "collection": "/collections/moricalliope",
+          "handle": "moricalliope",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/603788_561144_8d1fcaa9-5127-48e9-886f-2b3f62850fc7.png?v=1743127158&width=120",
+          "name_en": "Mori Calliope",
+          "name_ja": "森カリオペ",
+          "theme_color": "#c90d40"
+        },
+        {
+          "collection": "/collections/takanashikiara",
+          "handle": "takanashikiara",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/messageImage_1626783353321_a097c1c3-c661-4a89-bad2-94d1d2524c51.jpg?v=1720498623&width=120",
+          "name_en": "Takanashi Kiara",
+          "name_ja": "小鳥遊キアラ",
+          "theme_color": "#ff511c"
+        },
+        {
+          "collection": "/collections/ninomaeinanis",
+          "handle": "ninomaeinanis",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/messageImage_1626783429557_264d8362-04f2-47b3-b99a-9e56ce327b1f.jpg?v=1720498628&width=120",
+          "name_en": "Ninomae Ina'nis",
+          "name_ja": "一伊那尓栖",
+          "theme_color": "#62567e"
+        },
+        {
+          "collection": "/collections/watsonamelia",
+          "handle": "watsonamelia",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/messageImage_1626783546023_6c3ca2f9-9f50-43db-b5aa-71b7fdd8cffa.jpg?v=1720498629&width=120",
+          "name_en": "Watson Amelia",
+          "name_ja": "【配信活動終了】ワトソン・アメリア",
+          "theme_color": "#f8db92"
+        }
+      ],
+      "Promise": [
+        {
+          "collection": "/collections/irys",
+          "handle": "irys",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/messageImage_1626783630725_7255499e-ad96-4ec2-9f49-ca310d438a0c.jpg?v=1720498629&width=120",
+          "name_en": "IRyS",
+          "name_ja": "IRyS",
+          "theme_color": "#e10e5b"
+        },
+        {
+          "collection": "/collections/ourokronii",
+          "handle": "ourokronii",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/4010_681e6923-73fd-4fa0-96fe-75fdbff57e4f.png?v=1720498680&width=120",
+          "name_en": "Ouro Kronii",
+          "name_ja": "オーロ・クロニー",
+          "theme_color": "#20318b"
+        },
+        {
+          "collection": "/collections/hakosbaelz",
+          "handle": "hakosbaelz",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/4012_e14024e7-d55c-4307-8f98-c75ba151d7b9.png?v=1720498688&width=120",
+          "name_en": "Hakos Baelz",
+          "name_ja": "ハコス・ベールズ",
+          "theme_color": "#d72517"
+        }
+      ],
+      "ReGLOSS": [
+        {
+          "collection": "/collections/otonosekanade",
+          "handle": "otonosekanade",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Otonose_Kanade_b5f010d6-8701-4e6b-9717-e40b26933d37.png?v=1727947621&width=120",
+          "name_en": "Otonose Kanade",
+          "name_ja": "音乃瀬奏",
+          "theme_color": "#ffe7b5"
+        },
+        {
+          "collection": "/collections/ichijouririka",
+          "handle": "ichijouririka",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Ichijou_Ririka_86ca8849-7fbc-4c58-a21b-85095343bec0.png?v=1787730713&width=120",
+          "name_en": "Ichijou Ririka",
+          "name_ja": "一条莉々華",
+          "theme_color": "#f47da9"
+        },
+        {
+          "collection": "/collections/juufuuteiraden",
+          "handle": "juufuuteiraden",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Juufuutei_Raden_839a4700-1f1e-468e-ab67-0c31100f022a.png?v=1780651777&width=120",
+          "name_en": "Juufuutei Raden",
+          "name_ja": "儒烏風亭らでん",
+          "theme_color": "#3c7c71"
+        },
+        {
+          "collection": "/collections/todorokihajime",
+          "handle": "todorokihajime",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Todoroki_Hajime_49bdc4d4-e0c0-4f8e-9e41-4dc45a5a4c69.png?v=1727947532&width=120",
+          "name_en": "Todoroki Hajime",
+          "name_ja": "轟はじめ",
+          "theme_color": "#b6b9ff"
+        }
+      ],
+      "holoh3ro": [
+        {
+          "collection": "/collections/vestiazeta",
+          "handle": "vestiazeta",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/1_14d0b07f-979b-44c9-aee4-ef9ae1ab01ed.png?v=1787288503&width=120",
+          "name_en": "Vestia Zeta",
+          "name_ja": "ベスティア・ゼータ",
+          "theme_color": "#bab9c3"
+        },
+        {
+          "collection": "/collections/kaelakovalskia",
+          "handle": "kaelakovalskia",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/2_6f97452e-3ee5-4ecf-8f72-80ae8689b2da.png?v=1778664241&width=120",
+          "name_en": "Kaela Kovalskia",
+          "name_ja": "カエラ・コヴァルスキア",
+          "theme_color": "#ff3d3d"
+        },
+        {
+          "collection": "/collections/kobokanaeru",
+          "handle": "kobokanaeru",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/3009_ea866b3c-965c-4121-8591-82a24ca25782.png?v=1720498697&width=120",
+          "name_en": "Kobo Kanaeru",
+          "name_ja": "こぼ・かなえる",
+          "theme_color": "#393464"
+        }
+      ],
+      "holoro": [
+        {
+          "collection": "/collections/kureijiollie",
+          "handle": "kureijiollie",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Kureiji_Ollie_6c8c2ed4-717c-4337-9271-87f557c968ef.png?v=1720498626&width=120",
+          "name_en": "Kureiji Ollie",
+          "name_ja": "クレイジー・オリー",
+          "theme_color": "#d60e54"
+        },
+        {
+          "collection": "/collections/anyamelfissa",
+          "handle": "anyamelfissa",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Anya_Melfissa_ed09386a-8140-49f1-9280-092bfe5b62c3.png?v=1720498624&width=120",
+          "name_en": "Anya Melfissa",
+          "name_ja": "アーニャ・メルフィッサ",
+          "theme_color": "#f2c95c"
+        },
+        {
+          "collection": "/collections/pavoliareine",
+          "handle": "pavoliareine",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Pavolia_Reine_749b8600-01c1-452c-bd10-a1cc8c88be7a.png?v=1720498627&width=120",
+          "name_en": "Pavolia Reine",
+          "name_ja": "パヴォリア・レイネ",
+          "theme_color": "#0f52ba"
+        }
+      ],
+      "アソビ★まわり隊！": [
+        {
+          "collection": "/collections/achichimela",
+          "handle": "achichimela",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Achichi_Mela.png?v=1790307045&width=120",
+          "name_en": "Achichi Mela",
+          "name_ja": "熱千めら",
+          "theme_color": "#53b0ff"
+        },
+        {
+          "collection": "/collections/sorashinasopia",
+          "handle": "sorashinasopia",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Sorashina_Sopia.png?v=1790233921&width=120",
+          "name_en": "Sorashina Sopia",
+          "name_ja": "宙科そぴあ",
+          "theme_color": "#7b85ff"
+        },
+        {
+          "collection": "/collections/suzunatsuzuri",
+          "handle": "suzunatsuzuri",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Suzuna_Tsuzuri.png?v=1790233820&width=120",
+          "name_en": "Suzuna Tsuzuri",
+          "name_ja": "鈴鳴つづり",
+          "theme_color": "#bb1f25"
+        },
+        {
+          "collection": "/collections/hyakutokyoko",
+          "handle": "hyakutokyoko",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Hyakuto_Kyoko.png?v=1790233380&width=120",
+          "name_en": "Hyakuto Kyoko",
+          "name_ja": "百灯キョーコ",
+          "theme_color": "#ff862e"
+        }
+      ],
+      "ホロライブゲーマーズ": [
+        {
+          "collection": "/collections/shirakamifubuki",
+          "handle": "shirakamifubuki",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/shirakami_fubuki_thumb_27ff3c6f-72cf-42b9-a68b-6e0317238ef3.png?v=1720498675&width=120",
+          "name_en": "Shirakami Fubuki",
+          "name_ja": "白上フブキ",
+          "theme_color": "#a1dffd"
+        },
+        {
+          "collection": "/collections/ookamimio",
+          "handle": "ookamimio",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/ookami_mio_thumb_047e0b44-9b37-432d-aed1-3851f670732f.png?v=1789010909&width=120",
+          "name_en": "Ookami Mio",
+          "name_ja": "大神ミオ",
+          "theme_color": "#de2e2a"
+        },
+        {
+          "collection": "/collections/nekomataokayu",
+          "handle": "nekomataokayu",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/nekomata_okayu_thumb_ad879e43-2bc3-45bf-9371-79eb27efb772.png?v=1752043897&width=120",
+          "name_en": "Nekomata Okayu",
+          "name_ja": "猫又おかゆ",
+          "theme_color": "#d153ee"
+        },
+        {
+          "collection": "/collections/inugamikorone",
+          "handle": "inugamikorone",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/inugami_korone_thumb_c1e1b3f7-f07b-41eb-bdfc-d1e153db409f.png?v=1720498608&width=120",
+          "name_en": "Inugami Korone",
+          "name_ja": "戌神ころね",
+          "theme_color": "#ffd65b"
+        }
+      ],
+      "秘密結社holoX": [
+        {
+          "collection": "/collections/la-darknesss",
+          "handle": "la-darknesss",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/5b12f4e519c37a3dca0103f7036bdaa9_02fd57eb-0768-45e5-b152-e107312ac02b.png?v=1720498693&width=120",
+          "name_en": "La+ Darknesss",
+          "name_ja": "ラプラス・ダークネス",
+          "theme_color": "#936cc6"
+        },
+        {
+          "collection": "/collections/takanelui",
+          "handle": "takanelui",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/0a3c15482976f15cc8c97c9aad27b45a_257ed630-a25c-4a25-aab5-9d3de95043b1.png?v=1787730847&width=120",
+          "name_en": "Takane Lui",
+          "name_ja": "鷹嶺ルイ",
+          "theme_color": "#831550"
+        },
+        {
+          "collection": "/collections/hakuikoyori",
+          "handle": "hakuikoyori",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/bc7d51d9580d2f96bf9bfe8250d44858_49c3d443-14b0-4ec6-9ad6-c3d9e6b333d3.png?v=1785313834&width=120",
+          "name_en": "Hakui Koyori",
+          "name_ja": "博衣こより",
+          "theme_color": "#ffacd3"
+        },
+        {
+          "collection": "/collections/sakamatachloe",
+          "handle": "sakamatachloe",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/083ddbb00e0ba3b0fdd5fd3ed6e41b05_8ead8b42-0e6f-4f5c-895e-20f67d084cc5.png?v=1736508974&width=120",
+          "name_en": "Sakamata Chloe",
+          "name_ja": "【配信活動終了】沙花叉クロヱ",
+          "theme_color": "#cf4c4a"
+        },
+        {
+          "collection": "/collections/kazamairoha",
+          "handle": "kazamairoha",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/94246cc34ccfd4ca1613c9ec7cc41675_5cd01a4c-1071-4190-9105-cc44db698a56.png?v=1720498639&width=120",
+          "name_en": "Kazama Iroha",
+          "name_ja": "風真いろは",
+          "theme_color": "#93dcd8"
+        }
+      ]
+    },
+    "卒業": {
+      "(All)": [
+        {
+          "collection": "/collections/minatoaqua",
+          "handle": "minatoaqua",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/minato_aqua_thumb_41fceac0-073a-430d-8a23-93a5c66efa94.png?v=1724921762&width=120",
+          "name_en": "Minato Aqua",
+          "name_ja": "【卒業】湊あくあ",
+          "theme_color": "#fcb5da"
+        },
+        {
+          "collection": "/collections/murasakishion",
+          "handle": "murasakishion",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/3D_01_a94c02cb-503d-4f9e-9236-c8560d509168.png?v=1744339726&width=120",
+          "name_en": "Murasaki Shion",
+          "name_ja": "【卒業】紫咲シオン",
+          "theme_color": "#914baf"
+        },
+        {
+          "collection": "/collections/amanekanata",
+          "handle": "amanekanata",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/amane_kanata_thumb_6c4e3ca9-c060-41fa-9ed3-48df702597ca.png?v=1720498603&width=120",
+          "name_en": "Amane Kanata",
+          "name_ja": "【卒業】天音かなた",
+          "theme_color": "#8cd6e0"
+        },
+        {
+          "collection": "/collections/kiryucoco",
+          "handle": "kiryucoco",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/kiryu_coco_thumb_aeb5505d-78ad-41de-bda9-38017bab23ea.png?v=1720498613&width=120",
+          "name_en": "Kiryu Coco",
+          "name_ja": "【卒業】桐生ココ",
+          "theme_color": "#ff9632"
+        },
+        {
+          "collection": "/collections/gawrgura",
+          "handle": "gawrgura",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/messageImage_1626783497310_1cb9c84d-526b-4814-8deb-0daabd13cf8d.jpg?v=1720498630&width=120",
+          "name_en": "Gawr Gura",
+          "name_ja": "【卒業】がうる・ぐら",
+          "theme_color": "#5d81c7"
+        },
+        {
+          "collection": "/collections/tsukumosana",
+          "handle": "tsukumosana",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/sub4_1_c11b0e66-c985-4b1e-a8de-ee63e86dee76.png?v=1720498634&width=120",
+          "name_en": "Tsukumo Sana",
+          "name_ja": "【卒業】九十九佐命",
+          "theme_color": "#deb232"
+        },
+        {
+          "collection": "/collections/ceresfauna",
+          "handle": "ceresfauna",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/sub7_1_cd97b13c-a950-4d86-84da-c6c637f2ef65.png?v=1720498634&width=120",
+          "name_en": "Ceres Fauna",
+          "name_ja": "【卒業】セレス・ファウナ",
+          "theme_color": "#add198"
+        },
+        {
+          "collection": "/collections/nanashimumei",
+          "handle": "nanashimumei",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/sub6_1_5df6c8ec-c67b-4d73-8995-3571edc67bc3.png?v=1720498636&width=120",
+          "name_en": "Nanashi Mumei",
+          "name_ja": "【卒業】七詩ムメイ",
+          "theme_color": "#b99c90"
+        },
+        {
+          "collection": "/collections/hiodoshiao",
+          "handle": "hiodoshiao",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/Hiodoshi_Ao_82799200-a2b3-43d4-ba80-5e0f52201e5a.png?v=1727947496&width=120",
+          "name_en": "Hiodoshi Ao",
+          "name_ja": "【卒業】火威青",
+          "theme_color": "#1d3467"
+        },
+        {
+          "collection": "/collections/kagamikira",
+          "handle": "kagamikira",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/1002_9f25b075-1378-4cea-a8be-f29393777edd.png?v=1720498694&width=120",
+          "name_en": "Kagami Kira",
+          "name_ja": "【卒業】鏡見キラ",
+          "theme_color": "#00efef"
+        },
+        {
+          "collection": "/collections/magnidezmond",
+          "handle": "magnidezmond",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/2_36145d79-97c9-47d7-a47a-252de04326b9.png?v=1720498699&width=120",
+          "name_en": "Magni Dezmond",
+          "name_ja": "【卒業】マグニ・デズモンド",
+          "theme_color": "#463464"
+        },
+        {
+          "collection": "/collections/noirvesper",
+          "handle": "noirvesper",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/5004_vesper_9019e748-829e-42d0-9564-56795ff72b2f.png?v=1720498699&width=120",
+          "name_en": "Noir Vesper",
+          "name_ja": "【卒業】ノワール・ヴェスパー",
+          "theme_color": "#c8ccd0"
+        },
+        {
+          "collection": "/collections/friend-a",
+          "handle": "friend-a",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/0029__A_89950c41-0f0b-470b-97a1-ec8fb71e7016.png?v=1720498688&width=120",
+          "name_en": "A-chan / Friend A",
+          "name_ja": "【退職】友人Ａ（えーちゃん）",
+          "theme_color": "#373987"
+        },
+        {
+          "collection": "/collections/harusakinodoka",
+          "handle": "harusakinodoka",
+          "image": "//shop.hololivepro.com/cdn/shop/collections/0040___Live2D__fix_df0dbc71-8909-4fa7-bd72-a72110b4d9c5.png?v=1762330565&width=120",
+          "name_en": "Harusaki Nodoka",
+          "name_ja": "【退職】春先のどか",
+          "theme_color": "#e3f1cd"
+        }
+      ]
+    }
+  }
+}

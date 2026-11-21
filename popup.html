@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 260px;
+      padding: 14px;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    h3 {
+      margin: 0 0 12px 0;
+      font-size: 15px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 8px;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1557b0;
+    }
+    button.wav {
+      background-color: #0f9d58;
+    }
+    button.wav:hover {
+      background-color: #0b8043;
+    }
+    #status {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #555;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <h3>語音頁面批量下載</h3>
+  <button id="dlMp3">一鍵下載全部 MP3</button>
+  <button id="dlWav" class="wav">一鍵下載全部 WAV</button>
+  <div id="status">請在語音列表頁面點擊上方按鈕</div>
+  <script src="popup.js"></script>
+</body>
+</html>
