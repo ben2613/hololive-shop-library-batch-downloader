@@ -276,3 +276,7 @@ HoloOrderItemParse.probeOrderItemDownloads(
   document.querySelector('a.sky-pilot-list-item').href
 ).then(console.log);
 ```
+
+## Credits
+
+Initial project was done by **DW**
