@@ -134,26 +134,31 @@
   }
 
   async function streamZipToWritable(zip, writable, onProgress) {
-    return new Promise((resolve, reject) => {
-      const writer = writable.getWriter();
-      const stream = zip.generateInternalStream({ type: 'uint8array', compression: 'STORE' });
-      let chain = Promise.resolve();
-
-      stream.on('error', reject);
-      stream.on('data', (chunk) => {
-        chain = chain.then(() => writer.write(chunk));
+    const writer = writable.getWriter();
+    try {
+      await new Promise((resolve, reject) => {
+        const stream = zip.generateInternalStream({ type: 'uint8array', compression: 'STORE' });
+        let chain = Promise.resolve();
+        stream.on('error', reject);
+        stream.on('data', (chunk) => {
+          chain = chain.then(() => writer.write(chunk));
+        });
+        stream.on('end', () => {
+          chain.then(resolve).catch(reject);
+        });
+        if (onProgress) onProgress({ pct: 98, text: 'ZIP をストリーム書き込み…' });
+        stream.resume();
       });
-      stream.on('end', () => {
-        chain
-          .then(() => writer.close())
-          .then(() => writable.close())
-          .then(() => resolve())
-          .catch(reject);
-      });
-
-      if (onProgress) onProgress({ pct: 98, text: 'ZIP をストリーム書き込み…' });
-      stream.resume();
-    });
+      // writer.close() commits the file; do not call writable.close() while locked
+      await writer.close();
+    } catch (err) {
+      try {
+        await writer.abort(err);
+      } catch (_e) {
+        /* ignore */
+      }
+      throw err;
+    }
   }
 
   async function buildFilteredZip(itemLinks, format, opts = {}) {
