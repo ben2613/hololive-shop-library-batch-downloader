@@ -11,7 +11,7 @@ Browser extension for batch-downloading voice files on [shop.hololivepro.com](ht
 | `library-list.js` | **Digital library** list (`/apps/downloads/orders/{customerId}`): merge all pagination, two-column layout, filters |
 | `order-item-parse.js` | Phase 1: `fetch` + parse order-item HTML for WAV URLs / file IDs (`HoloOrderItemParse`) |
 | `talent-structure.json` | Talent tree for library filters (regenerate from `/pages/talent`; see below) |
-| `popup.html` / `popup.js` | Legacy popup (not wired in `manifest.json`) |
+| `popup.html` / `popup.js` | **Unused** — no `action` / `default_popup` in `manifest.json` (old MV2-style flow) |
 
 ### Library list (`library-list.js`)
 
@@ -24,7 +24,17 @@ Browser extension for batch-downloading voice files on [shop.hololivepro.com](ht
 
 ### Order item detail (`content.js`)
 
-- Shows MP3 / WAV batch buttons when `div.action-icon` is present; ~1.8s delay between tracks.
+- Runs only on URLs matching `.../order_items/{id}` (not on the library list).
+- Injects a floating MP3 / WAV panel when `div.action-icon` exists; ~1.8s between tracks.
+- Menu labels on the shop are like `MP3 ファイル(18.1 MB)` — matching uses `startsWith('MP3 ファイル')` / `WAV ファイル`, scoped per `div.track` when possible.
+
+### Scripts on each page load
+
+| Page | `content.js` | `library-list.js` | `order-item-parse.js` |
+|------|----------------|-------------------|------------------------|
+| Library list | no-op (early exit) | active | loaded, idle unless probed |
+| Order item detail | batch panel | no-op (early exit) | loaded, idle unless probed |
+| Other shop pages | no-op | no-op | idle |
 
 ### Not implemented yet
 

@@ -1,5 +1,29 @@
 (function () {
+  if (!/\/order_items\/\d+/.test(location.pathname)) return;
+
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  function isVisible(el) {
+    return el && el.offsetParent !== null;
+  }
+
+  function menuOptionForFormat(root, formatKeyword) {
+    const prefix = `${formatKeyword} ファイル`;
+    const candidates = [...root.querySelectorAll('a, button, [role="menuitem"], li, span')].filter((el) => {
+      if (!isVisible(el)) return false;
+      const text = el.textContent.trim();
+      if (!text.startsWith(prefix)) return false;
+      const link = el.closest('a') || (el.tagName === 'A' ? el : el.querySelector('a[href]'));
+      if (link?.href) return true;
+      return el.children.length === 0;
+    });
+    return candidates[candidates.length - 1] || null;
+  }
+
+  async function dismissOpenMenus() {
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await sleep(80);
+  }
 
   function createFloatingPanel() {
     if (document.getElementById('holo-batch-dl-panel')) return;
@@ -96,8 +120,10 @@
     for (let i = 0; i < icons.length; i++) {
       statusEl.textContent = `下載中：${i + 1} / ${icons.length}`;
       const icon = icons[i];
+      const trackRoot = icon.closest('div.track') || icon.parentElement || document.body;
 
-      icon.scrollIntoView({ behavior: 'instant', block: 'center' });
+      await dismissOpenMenus();
+      icon.scrollIntoView({ behavior: 'auto', block: 'center' });
       await sleep(150);
 
       icon.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
@@ -105,29 +131,23 @@
       icon.click();
 
       let targetOption = null;
-      for (let attempt = 0; attempt < 25; attempt++) {
+      for (let attempt = 0; attempt < 30; attempt++) {
         await sleep(80);
-        const allMatches = Array.from(document.querySelectorAll('li, div, span, a, button')).filter((el) => {
-          if (el.offsetParent === null) return false;
-          const text = el.textContent.trim();
-          return text === `${formatKeyword} ファイル` && el.children.length === 0;
-        });
-
-        if (allMatches.length > 0) {
-          targetOption = allMatches[allMatches.length - 1];
-          break;
-        }
+        targetOption = menuOptionForFormat(trackRoot, formatKeyword);
+        if (!targetOption) targetOption = menuOptionForFormat(document, formatKeyword);
+        if (targetOption) break;
       }
 
       if (targetOption) {
-        const clickable = targetOption.closest('li, [role="menuitem"], a, button') || targetOption;
+        const link = targetOption.closest('a[href]') || targetOption.querySelector?.('a[href]');
+        const clickable = link || targetOption.closest('li, [role="menuitem"], a, button') || targetOption;
         clickable.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
         clickable.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window }));
         clickable.click();
         successCount++;
       }
 
-      // 黃金平衡間隔：1200 毫秒（1.2 秒），兼顧流暢度與下載成功率
+      await dismissOpenMenus();
       await sleep(1800);
     }
 
